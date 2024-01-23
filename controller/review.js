@@ -55,7 +55,30 @@ const updateReview = async(req,res)=>{
 }
 
 
+const deleteReview = async(req,res)=>{
+    try {
+        const userId = req.params.userId; // Assuming 'userId' is the parameter name
+        const user = await reviewModel.findOne({ _id: userId });
+    
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+    
+         
+             
+    
+        const deletedUser = await reviewModel.findOneAndDelete({ _id: userId });
+    
+        res.status(200).json({ message: 'deleted  successfully',data:user });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+    
+}
+
+
 module.exports={
     sendReview,
-    updateReview
+    updateReview,
+    deleteReview
 }
